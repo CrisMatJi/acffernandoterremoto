@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
 import styles from './Contacto.module.css'
 
@@ -174,9 +175,9 @@ export default function Contacto() {
             <p className={styles.reservaText}>
               ¿Quieres reservar tu asiento para el próximo evento?
             </p>
-            <a href="/eventos" className={styles.reservaBtn}>
+            <Link to="/eventos" className={styles.reservaBtn}>
               Acceder a Teatro Terremoto
-            </a>
+            </Link>
           </div>
         </div>
       </div>

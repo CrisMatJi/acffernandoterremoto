@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import styles from './Hero.module.css'
 import { pub } from '../pub'
 
@@ -58,9 +59,9 @@ export default function Hero() {
           <a href="#eventos" className={styles.btnSecondary}>
             Próximos Eventos
           </a>
-          <a href="/eventos" className={styles.btnPrimary}>
+          <Link to="/eventos" className={styles.btnPrimary}>
             Reservar Entradas
-          </a>
+          </Link>
         </div>
       </div>
 

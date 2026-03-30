@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
 import { pub } from '../pub'
 
@@ -39,9 +40,9 @@ export default function Navbar() {
           </li>
         ))}
         <li>
-          <a href="/eventos" className={styles.ctaNav}>
+          <Link to="/eventos" className={styles.ctaNav}>
             Teatro Terremoto
-          </a>
+          </Link>
         </li>
       </ul>
 

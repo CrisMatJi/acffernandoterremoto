@@ -23,7 +23,7 @@ export default function Footer() {
           <a href="#eventos"       className={styles.link}>Eventos</a>
           <a href="#galeria"       className={styles.link}>Galería</a>
           <a href="#contacto"      className={styles.link}>Contacto</a>
-          <a href="/eventos"       className={styles.linkGold}>Reservar entradas</a>
+          <Link to="/eventos" className={styles.linkGold}>Reservar entradas</Link>
         </nav>
 
         <div className={styles.copy}>

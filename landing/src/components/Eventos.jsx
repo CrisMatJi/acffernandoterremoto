@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../supabase'
 import styles from './Eventos.module.css'
 
@@ -82,10 +83,10 @@ export default function Eventos() {
         )}
 
         <div className={styles.cta}>
-          <a href="/eventos" className={styles.ctaBtn}>
+          <Link to="/eventos" className={styles.ctaBtn}>
             <span>Ver todos los eventos y reservar</span>
             <ArrowIcon />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -117,9 +118,9 @@ function EventCard({ evento, index }) {
       </div>
 
       <div className={styles.cardFooter}>
-        <a href="/eventos" className={styles.reserveBtn}>
+        <Link to="/eventos" className={styles.reserveBtn}>
           Reservar plaza
-        </a>
+        </Link>
         <div className={styles.cardAccent} />
       </div>
     </div>
