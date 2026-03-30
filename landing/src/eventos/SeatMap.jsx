@@ -69,7 +69,7 @@ export default function SeatMap() {
 
   // ── Derived state ─────────────────────────────────────────────────────────
   const asientoMap = useMemo(
-    () => Object.fromEntries((asientos).map(a => [a.id, a])),
+    () => Object.fromEntries((asientos).map(a => [`${a.letra}${a.numero}`, a])),
     [asientos]
   )
 
