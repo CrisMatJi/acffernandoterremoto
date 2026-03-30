@@ -216,6 +216,20 @@
   white-space: nowrap;
 }
 
+.sociosBadge {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C17A7A;
+  border: 1px solid rgba(193, 122, 122, 0.4);
+  border-radius: 2px;
+  padding: 0.2rem 0.5rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .eventCardSkeleton {
   height: 64px;
   background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.04) 75%);

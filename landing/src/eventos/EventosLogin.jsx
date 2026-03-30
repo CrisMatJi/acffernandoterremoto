@@ -193,7 +193,9 @@ export default function EventosLogin() {
                       </div>
                       {ev.activo_invitado ? (
                         <span className={styles.invitadoBadge}>Invitados</span>
-                      ) : null}
+                      ) : (
+                        <span className={styles.sociosBadge}>Solo socios</span>
+                      )}
                     </button>
                   )
                 })}
