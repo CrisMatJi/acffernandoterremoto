@@ -23,7 +23,7 @@ RETURNS TABLE(id int, nombre text, apellidos text, n_socio int)
 LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
   RETURN QUERY
-  SELECT s.id, s.nombre, s.apellidos, s.n_socio
+  SELECT s.id, s.nombre::text, s.apellidos::text, s.n_socio
   FROM socios s
   WHERE s.id = p_id AND lower(s.dni) = lower(p_dni) AND s.activo = 1;
 END; $$;
