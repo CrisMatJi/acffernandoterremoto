@@ -65,6 +65,11 @@ BEGIN
 END; $$;
 
 -- ── CRÍTICO: permisos de ejecución para la anon key ──────────────────────────
+-- Las tablas creadas por SQL no tienen permisos automáticos en Supabase
+GRANT SELECT ON TABLE eventos   TO anon;
+GRANT SELECT ON TABLE asientos  TO anon;
+GRANT SELECT ON TABLE reserva   TO anon;
+
 GRANT EXECUTE ON FUNCTION auth_socio(int, text)               TO anon;
 GRANT EXECUTE ON FUNCTION hacer_reserva(int, int, text, text, text) TO anon;
 GRANT EXECUTE ON FUNCTION cancelar_reserva(int, int, text)    TO anon;

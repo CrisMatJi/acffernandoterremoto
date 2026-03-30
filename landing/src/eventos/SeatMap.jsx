@@ -37,7 +37,13 @@ export default function SeatMap() {
       supabase.from('reserva').select('asiento_id, socio_id, invitado_id').eq('evento_id', session.eventoId),
     ])
 
-    if (e1 || e2) { setLoadError('No se pudo cargar el mapa de asientos.'); setLoading(false); return }
+    if (e1 || e2) {
+      const msg = e1?.message || e2?.message || 'Error desconocido'
+      console.error('SeatMap fetchData error:', e1, e2)
+      setLoadError(`No se pudo cargar el mapa de asientos: ${msg}`)
+      setLoading(false)
+      return
+    }
 
     setAsientos(seats ?? [])
     setReservas(rvs   ?? [])

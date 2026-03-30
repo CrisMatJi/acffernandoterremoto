@@ -89,7 +89,10 @@ export default function EventosLogin() {
     })
 
     if (rpcErr || !data?.length) {
-      setError('Número de socio o DNI incorrectos. Comprueba los datos.')
+      console.error('auth_socio error:', rpcErr)
+      setError(rpcErr
+        ? `Error Supabase: ${rpcErr.message}`
+        : 'Número de socio o DNI incorrectos. Comprueba los datos.')
       setSubmitting(false)
       return
     }
