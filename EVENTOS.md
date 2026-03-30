@@ -3,26 +3,67 @@
 Entra en Supabase → SQL Editor y ejecuta este bloque:
 
 ```sql
--- 1. Permite que la anon key lea eventos activos
+-- 1. Anon puede ver eventos activos
 CREATE POLICY "anon lee eventos activos"
   ON eventos FOR SELECT TO anon
   USING (activo = 1 OR activo_invitado = 1);
 
--- 2. Función segura de autenticación de socios
---    (SECURITY DEFINER = bypassa RLS, nunca expone datos innecesarios)
+-- 2. Anon puede ver todos los asientos
+CREATE POLICY "anon lee asientos"
+  ON asientos FOR SELECT TO anon USING (true);
+
+-- 3. Anon puede ver reservas (para mostrar asientos ocupados)
+CREATE POLICY "anon lee reservas"
+  ON reserva FOR SELECT TO anon USING (true);
+
+-- 4. Función segura de autenticación de socios
 CREATE OR REPLACE FUNCTION auth_socio(p_id int, p_dni text)
 RETURNS TABLE(id int, nombre text, apellidos text, n_socio int)
-LANGUAGE plpgsql SECURITY DEFINER
-AS $$
+LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
   RETURN QUERY
   SELECT s.id, s.nombre, s.apellidos, s.n_socio
   FROM socios s
-  WHERE s.id = p_id
-    AND lower(s.dni) = lower(p_dni)
-    AND s.activo = 1;
-END;
-$$;
+  WHERE s.id = p_id AND lower(s.dni) = lower(p_dni) AND s.activo = 1;
+END; $$;
+
+-- 5. Función para hacer/actualizar reserva
+CREATE OR REPLACE FUNCTION hacer_reserva(
+  p_evento_id   int,
+  p_socio_id    int,
+  p_invitado_id text,
+  p_nombre      text,
+  p_asiento_id  text
+) RETURNS void LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+  IF p_socio_id IS NOT NULL THEN
+    DELETE FROM reserva WHERE evento_id = p_evento_id AND socio_id = p_socio_id::text;
+  ELSE
+    DELETE FROM reserva WHERE evento_id = p_evento_id AND invitado_id = p_invitado_id;
+  END IF;
+  INSERT INTO reserva (socio_id, invitado_id, nombre_apellidos, asiento_id, evento_id)
+  VALUES (
+    CASE WHEN p_socio_id IS NOT NULL THEN p_socio_id::text ELSE NULL END,
+    p_invitado_id,
+    p_nombre,
+    p_asiento_id,
+    p_evento_id
+  );
+END; $$;
+
+-- 6. Función para cancelar reserva
+CREATE OR REPLACE FUNCTION cancelar_reserva(
+  p_evento_id   int,
+  p_socio_id    int,
+  p_invitado_id text
+) RETURNS void LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+  IF p_socio_id IS NOT NULL THEN
+    DELETE FROM reserva WHERE evento_id = p_evento_id AND socio_id = p_socio_id::text;
+  ELSE
+    DELETE FROM reserva WHERE evento_id = p_evento_id AND invitado_id = p_invitado_id;
+  END IF;
+END; $$;
 ```
 
 ---

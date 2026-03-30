@@ -66,11 +66,11 @@
 /* ── Card ── */
 .card {
   width: 100%;
-  max-width: 560px;
+  max-width: 680px;
   background: var(--bg-card);
   border: 1px solid var(--border-dim);
   border-radius: 4px;
-  padding: 2.75rem 3rem;
+  padding: 3.25rem 3.5rem;
 }
 
 /* ── Card header ── */
@@ -121,22 +121,23 @@
 .fieldLabel {
   display: block;
   font-family: var(--font-body);
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
 
 .select {
   width: 100%;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.04);
   border: 1px solid var(--border-dim);
   border-radius: 2px;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--text-cream);
   outline: none;
   cursor: pointer;
@@ -171,10 +172,10 @@
 }
 
 .noEventos {
-  font-family: var(--font-sub);
-  font-size: 0.9rem;
-  font-style: italic;
-  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-muted);
   padding: 0.75rem 0;
 }
 
@@ -190,15 +191,15 @@
 
 .tab {
   flex: 1;
-  padding: 0.65rem 1rem;
+  padding: 0.75rem 1rem;
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   background: transparent;
   border: none;
-  color: var(--text-dim);
+  color: var(--text-muted);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -233,12 +234,13 @@
 
 .input {
   width: 100%;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.04);
   border: 1px solid var(--border-dim);
   border-radius: 2px;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--text-cream);
   outline: none;
   transition: border-color 0.2s;
