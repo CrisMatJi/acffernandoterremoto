@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from './Navbar.module.css'
+import { pub } from '../pub'
 
 const links = [
   { href: '#referentes',    label: 'Referentes' },
@@ -25,7 +26,7 @@ export default function Navbar() {
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
       <a href="#hero" className={styles.brand}>
-        <img src="/images/logo.jpg" alt="Logo Peña Flamenca Fernando Terremoto" className={styles.logo} />
+        <img src={pub('/images/logo.jpg')} alt="Logo Peña Flamenca Fernando Terremoto" className={styles.logo} />
         <span className={styles.brandName}>ACF Fernando&nbsp;Terremoto</span>
       </a>
 
@@ -39,7 +40,7 @@ export default function Navbar() {
         ))}
         <li>
           <a href="/eventos" className={styles.ctaNav}>
-            Reservar Entradas
+            Teatro Terremoto
           </a>
         </li>
       </ul>

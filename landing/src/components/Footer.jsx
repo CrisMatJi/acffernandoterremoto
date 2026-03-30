@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import styles from './Footer.module.css'
+import { pub } from '../pub'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -9,7 +11,7 @@ export default function Footer() {
 
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <img src="/images/logo.jpg" alt="Logo" className={styles.logo} />
+          <img src={pub('/images/logo.jpg')} alt="Logo" className={styles.logo} />
           <div>
             <p className={styles.brandName}>ACF Fernando Terremoto</p>
             <p className={styles.brandSub}>Peña Flamenca · Jerez de la Frontera</p>
@@ -26,6 +28,7 @@ export default function Footer() {
 
         <div className={styles.copy}>
           <p>© {year} Peña Flamenca Fernando Terremoto. Todos los derechos reservados.</p>
+          <Link to="/eventos/admin" className={styles.linkAdmin}>Administración</Link>
         </div>
       </div>
     </footer>

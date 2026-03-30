@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <script>
-      // GitHub Pages SPA redirect: preserve the path as a query param
-      var l = window.location
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1).join('/') +
-        '/?p=' + encodeURIComponent(l.pathname + l.search) + l.hash
+      // GitHub Pages SPA: redirect preservando la ruta como ?p= param
+      var base = '/acffernandoterremoto'
+      var path = window.location.pathname.replace(base, '') || '/'
+      window.location.replace(
+        window.location.origin + base +
+        '/?p=' + encodeURIComponent(path + window.location.search) +
+        window.location.hash
       )
     </script>
   </head>
+  <body></body>
 </html>

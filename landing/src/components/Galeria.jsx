@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './Galeria.module.css'
+import { pub } from '../pub'
 
 const fotos = [
-  { src: '/images/galeria/galeria-1.png',   alt: 'Momento flamenco 1' },
-  { src: '/images/galeria/galeria-2.png',   alt: 'Momento flamenco 2' },
-  { src: '/images/galeria/galeria-3.png',   alt: 'Momento flamenco 3' },
-  { src: '/images/galeria/galeria-4.png',   alt: 'Momento flamenco 4' },
-  { src: '/images/galeria/galeria-5.png',   alt: 'Momento flamenco 5' },
-  { src: '/images/galeria/galeria-6.png',   alt: 'Momento flamenco 6' },
-  { src: '/images/galeria/galeria-7.png',   alt: 'Momento flamenco 7' },
-  { src: '/images/galeria/galeria-8.png',   alt: 'Momento flamenco 8' },
-  { src: '/images/galeria/galeria-9.png',   alt: 'Momento flamenco 9' },
-  { src: '/images/galeria/galeria-10.png',  alt: 'Momento flamenco 10' },
-  { src: '/images/galeria/galeria-11.jpeg', alt: 'Momento flamenco 11' },
+  { src: pub('/images/galeria/galeria-1.png'),   alt: 'Momento flamenco 1' },
+  { src: pub('/images/galeria/galeria-2.png'),   alt: 'Momento flamenco 2' },
+  { src: pub('/images/galeria/galeria-3.png'),   alt: 'Momento flamenco 3' },
+  { src: pub('/images/galeria/galeria-4.png'),   alt: 'Momento flamenco 4' },
+  { src: pub('/images/galeria/galeria-5.png'),   alt: 'Momento flamenco 5' },
+  { src: pub('/images/galeria/galeria-6.png'),   alt: 'Momento flamenco 6' },
+  { src: pub('/images/galeria/galeria-7.png'),   alt: 'Momento flamenco 7' },
+  { src: pub('/images/galeria/galeria-8.png'),   alt: 'Momento flamenco 8' },
+  { src: pub('/images/galeria/galeria-9.png'),   alt: 'Momento flamenco 9' },
+  { src: pub('/images/galeria/galeria-10.png'),  alt: 'Momento flamenco 10' },
+  { src: pub('/images/galeria/galeria-11.jpeg'), alt: 'Momento flamenco 11' },
 ]
 
 const AUTOPLAY_MS = 4500

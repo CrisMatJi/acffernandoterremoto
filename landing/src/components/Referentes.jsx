@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import styles from './Referentes.module.css'
+import { pub } from '../pub'
 
 const referentes = [
   {
@@ -110,7 +111,7 @@ function ReferenteCard({ referente, delay }) {
   return (
     <article className={styles.card} style={{ animationDelay: `${delay}s` }}>
       <div className={styles.imageWrap}>
-        <img src={referente.imagen} alt={referente.nombre} className={styles.cardImage} />
+        <img src={pub(referente.imagen)} alt={referente.nombre} className={styles.cardImage} />
         <div className={styles.imageOverlay} />
       </div>
 

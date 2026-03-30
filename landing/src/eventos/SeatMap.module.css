@@ -1,6 +1,15 @@
 .page {
   min-height: 100vh;
-  background: var(--bg-deep);
+  overflow-x: hidden;
+  background-color: #0a0a0a;
+  background-image: linear-gradient(to bottom,
+    rgba(6,6,6,0.82) 0%,
+    rgba(6,6,6,0.68) 40%,
+    rgba(6,6,6,0.88) 100%),
+    var(--sala-bg, none);
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
 }
@@ -127,11 +136,17 @@
 /* ── Map wrapper ── */
 .mapWrap {
   width: 100%;
-  max-width: 520px;
+  max-width: 640px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  background: rgba(6,6,6,0.58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 6px;
+  padding: 1.75rem 1.5rem;
 }
 
 /* ── Stage ── */
@@ -152,9 +167,15 @@
 
 /* ── Grid ── */
 .gridScroll {
-  overflow-x: auto;
+  overflow-x: hidden;
   width: 100%;
-  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 600px) {
+  .gridScroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .grid {
@@ -169,11 +190,11 @@
 .gridRow {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .rowLabel {
-  width: 22px;
+  width: 20px;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 700;
@@ -184,7 +205,7 @@
 }
 
 .colLabel {
-  width: 36px;
+  width: 22px;
   height: 20px;
   font-family: var(--font-body);
   font-size: 0.68rem;
@@ -199,14 +220,19 @@
 
 /* ── Seat ── */
 .seat {
-  width: 36px;
-  height: 30px;
-  border-radius: 4px 4px 6px 6px;
+  width: 22px;
+  height: 18px;
+  border-radius: 3px 3px 5px 5px;
   border: 1px solid transparent;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, transform 0.1s;
   flex-shrink: 0;
   padding: 0;
+}
+
+/* Pasillo entre grupos de asientos (después de col 4, 9, 14) */
+.aisle {
+  margin-right: 14px;
 }
 
 .libre {
@@ -296,6 +322,12 @@
 
 .panelInner {
   display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.panelRow {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -324,6 +356,60 @@
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+}
+
+/* Indicador de reserva actual (cuando el usuario está editando) */
+.reservaActualInfo {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border-left: 2px solid var(--gold);
+  background: rgba(201,168,76,0.06);
+  border-radius: 0 2px 2px 0;
+}
+
+.reservaActualInfo strong {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* Aviso al actualizar reserva */
+.updateWarning {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: #e09a60;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  border-left: 2px solid #e09a60;
+  background: rgba(224,154,96,0.07);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Botón de descarga de entrada PDF */
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: none;
+  border: 1px solid var(--border-gold);
+  padding: 0.75rem 1.25rem;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.downloadBtn:hover {
+  background: rgba(201,168,76,0.08);
+  border-color: var(--gold);
 }
 
 .confirmBtn {

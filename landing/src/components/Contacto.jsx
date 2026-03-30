@@ -175,7 +175,7 @@ export default function Contacto() {
               ¿Quieres reservar tu asiento para el próximo evento?
             </p>
             <a href="/eventos" className={styles.reservaBtn}>
-              Acceder a la plataforma de eventos
+              Acceder a Teatro Terremoto
             </a>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import styles from './Hero.module.css'
+import { pub } from '../pub'
 
 export default function Hero() {
   const titleRef = useRef(null)
@@ -23,7 +24,7 @@ export default function Hero() {
       {/* Background image with overlay */}
       <div className={styles.bgWrap}>
         <img
-          src="/images/lobby_background.png"
+          src={pub('/images/lobby_background.png')}
           alt=""
           className={styles.bgImage}
         />
@@ -46,10 +47,6 @@ export default function Hero() {
           <span className={styles.titleLine1}>Asociación Cultural Flamenca</span>
           <span className={styles.titleLine2}>Fernando Terremoto</span>
         </h1>
-
-        <p className={styles.subtitle}>
-          La mejor peña flamenca de la ciudad
-        </p>
 
         <div className={styles.divider}>
           <span className={styles.dividerLine} />

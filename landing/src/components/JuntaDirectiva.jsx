@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import styles from './JuntaDirectiva.module.css'
+import { pub } from '../pub'
 
 // id  → nombre de fichero base en /images/junta/
 // Si el miembro no tiene variante -bn/-color se especifica bnFile/colorFile directamente
@@ -27,9 +28,11 @@ const miembros = [
     cargo: 'Tesorería',
   },
   {
-    id: 'praxedes',
-    nombre: 'Don Práxedes Neira Gómez',
-    cargo: 'Vocal',
+    id: 'juan-vargas-prado',
+    nombre: 'D. Juan Vargas Prado',
+    cargo: 'Adjunto a Relaciones Públicas',
+    bnFile:    '/images/junta/juan_vargas_prado.jpg',
+    colorFile: '/images/junta/juan_vargas_prado.jpg',
   },
   {
     id: 'fernando-vocal',
@@ -37,29 +40,25 @@ const miembros = [
     cargo: 'Vocal',
   },
   {
-    id: 'juan-jose-vocal',
-    nombre: 'Don Juan José Ruiz Suárez',
+    id: 'angeles-gomez',
+    nombre: 'Ángeles Gómez Sánchez',
     cargo: 'Vocal',
+    bnFile:    '/images/junta/angeles_gomez_sanchez.jpg',
+    colorFile: '/images/junta/angeles_gomez_sanchez.jpg',
   },
   {
-    id: 'antonio-morion',
-    nombre: 'Don Antonio Morión Ruiz',
+    id: 'sonia-vargas',
+    nombre: 'Sonia Vargas Rodríguez',
     cargo: 'Vocal',
+    bnFile:    '/images/junta/sonia_vargas.jpg',
+    colorFile: '/images/junta/sonia_vargas.jpg',
   },
   {
-    id: 'porto',
-    nombre: 'Don Antonio Martínez Porto',
+    id: 'alejandro-benitez',
+    nombre: 'Alejandro Benítez Escobar',
     cargo: 'Vocal',
-  },
-  {
-    id: 'diaz-borrego',
-    nombre: 'Don Antonio León Díaz-Borrego',
-    cargo: 'Vocal',
-  },
-  {
-    id: 'fernando-morion',
-    nombre: 'Don Fernando Morión Fernández',
-    cargo: 'Vocal',
+    bnFile:    '/images/junta/alejandro_benitez_escobar.jpg',
+    colorFile: '/images/junta/alejandro_benitez_escobar.jpg',
   },
   {
     id: 'miguel-cabral',
@@ -112,8 +111,8 @@ export default function JuntaDirectiva() {
 }
 
 function MemberCard({ miembro, index }) {
-  const bnSrc    = miembro.bnFile    ?? `/images/junta/${miembro.id}-bn.png`
-  const colorSrc = miembro.colorFile ?? `/images/junta/${miembro.id}-color.png`
+  const bnSrc    = miembro.bnFile    ? pub(miembro.bnFile)    : pub(`/images/junta/${miembro.id}-bn.png`)
+  const colorSrc = miembro.colorFile ? pub(miembro.colorFile) : pub(`/images/junta/${miembro.id}-color.png`)
 
   return (
     <div
@@ -122,16 +121,16 @@ function MemberCard({ miembro, index }) {
     >
       <div className={styles.imgWrap}>
         <img
+          key={bnSrc}
           src={bnSrc}
           alt={miembro.nombre}
           className={`${styles.img} ${styles.imgBn}`}
-          onError={e => { e.target.style.display = 'none' }}
         />
         <img
+          key={colorSrc}
           src={colorSrc}
           alt=""
           className={`${styles.img} ${styles.imgColor}`}
-          onError={e => { e.target.style.display = 'none' }}
         />
         <div className={styles.imgOverlay} />
       </div>

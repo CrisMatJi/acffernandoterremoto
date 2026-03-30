@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import styles from './Historia.module.css'
+import { pub } from '../pub'
 
 // ─── CONTENIDO ────────────────────────────────────────────────────────────────
 // Sustituye estos textos con el contenido real de la web cuando lo tengas
@@ -119,7 +120,7 @@ export default function Historia() {
             {/* Imagen decorativa lateral */}
             <div className={styles.contentDeco}>
               <img
-                src="/images/fernando_terremoto.jpg"
+                src={pub('/images/fernando_terremoto.jpg')}
                 alt="Fernando Terremoto"
                 className={styles.decoImg}
               />

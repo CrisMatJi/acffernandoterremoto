@@ -101,7 +101,7 @@ function EventCard({ evento, index }) {
     <div className={styles.card} style={{ animationDelay: `${index * 0.15}s` }}>
       <div className={styles.cardTop}>
         <span className={styles.cardType}>
-          {evento.activo_invitado ? 'Invitados' : 'Socios'}
+          {evento.activo_invitado ? 'Invitados' : 'Acceso anticipado para socios'}
         </span>
         <div className={styles.cardDate}>
           <CalendarIcon />

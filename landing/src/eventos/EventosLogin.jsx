@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { SessionContext } from '../SessionContext'
 import styles from './EventosLogin.module.css'
+import { pub } from '../pub'
 
 // ─── NIF / NIE validation ───────────────────────────────────────────────────
 function validarNIF(nif) {
@@ -144,7 +145,7 @@ export default function EventosLogin() {
       {/* Header */}
       <header className={styles.header}>
         <Link to="/" className={styles.brand}>
-          <img src="/images/logo.jpg" alt="Logo" className={styles.logo} />
+          <img src={pub('/images/logo.jpg')} alt="Logo" className={styles.logo} />
           <span>ACF Fernando Terremoto</span>
         </Link>
         <Link to="/" className={styles.backLink}>← Volver a la web</Link>
@@ -197,7 +198,7 @@ export default function EventosLogin() {
                       {ev.activo_invitado ? (
                         <span className={styles.invitadoBadge}>Invitados</span>
                       ) : (
-                        <span className={styles.sociosBadge}>Solo socios</span>
+                        <span className={styles.sociosBadge}>Acceso anticipado para socios</span>
                       )}
                     </button>
                   )
