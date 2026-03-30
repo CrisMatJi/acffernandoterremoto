@@ -1,0 +1,24 @@
+# Descarga original del sitio WordPress (ya migrado, no necesario)
+webDescargada/
+
+# Archivos SQL originales (ya migrados a Supabase)
+*.sql
+
+# Variables de entorno
+landing/.env
+
+# Dependencias
+landing/node_modules/
+
+# Build
+landing/dist/
+
+# Sistema
+.DS_Store
+
+# IDEs y agentes
+.agents/
+.claude/
+.trae/
+.windsurf/
+skills-lock.json

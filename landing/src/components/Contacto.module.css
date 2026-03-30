@@ -1,0 +1,408 @@
+.section {
+  padding: 7rem 0;
+  background: var(--bg-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+}
+
+/* Background art */
+.bgArt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.artSvg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.inner.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.labelLine {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--text-cream);
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+
+.heading em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.subtitle {
+  font-family: var(--font-sub);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* ── 2-column layout ── */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+/* ── Info column ── */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border-dim);
+  border: 1px solid var(--border-dim);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.6rem 1.75rem;
+  background: var(--bg-card);
+  text-decoration: none;
+  transition: background 0.25s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+}
+
+.cardIcon {
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cardLabel {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.cardValue {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--text-cream);
+}
+
+.cardArrow {
+  color: var(--gold-dim);
+  font-size: 1rem;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.card:hover .cardArrow {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+/* ── Form column ── */
+.formWrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 3px;
+  padding: 2.25rem 2.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.input,
+.textarea {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-dim);
+  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-cream);
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-dim);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(201,168,76,0.5);
+}
+
+.submitBtn {
+  align-self: flex-end;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--gold);
+  border: none;
+  padding: 0.9rem 2.25rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorMsg {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: #e07070;
+}
+
+/* Success state */
+.successMsg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: var(--text-cream);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.successIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.successSub {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.resetBtn {
+  margin-top: 0.5rem;
+  background: none;
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.resetBtn:hover {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+
+/* ── Reserva CTA ── */
+.reservaCta {
+  border: 1px solid var(--border-gold);
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(139,26,26,0.05), rgba(201,168,76,0.04));
+  padding: 2.5rem;
+}
+
+.reservaInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.reservaText {
+  font-family: var(--font-sub);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text-muted);
+  flex: 1;
+  min-width: 200px;
+}
+
+.reservaBtn {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bg-deep);
+  background: var(--gold);
+  padding: 0.9rem 2rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.reservaBtn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .inner {
+    padding: 0 1.5rem;
+  }
+
+  .reservaInner {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .formWrap {
+    padding: 1.5rem;
+  }
+
+  .submitBtn {
+    align-self: stretch;
+  }
+
+  .reservaBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 4rem 0;
+  }
+}

@@ -1,0 +1,4 @@
+/* Reset Vite template styles — the landing page uses its own component CSS modules */
+main {
+  width: 100%;
+}
