@@ -114,8 +114,156 @@
 }
 
 /* ── Event selector ── */
+.sectionBlock {
+  margin-bottom: 1.75rem;
+}
+
+.eventList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.eventCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-dim);
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, border-color 0.2s;
+  width: 100%;
+}
+
+.eventCard:hover {
+  background: rgba(201,168,76,0.07);
+  border-color: rgba(201,168,76,0.3);
+}
+
+.eventCardSelected {
+  background: rgba(201,168,76,0.1);
+  border-color: var(--gold);
+}
+
+.eventRadio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.eventCardSelected .eventRadio {
+  border-color: var(--gold);
+}
+
+.radioDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.radioDotActive {
+  background: var(--gold);
+}
+
+.eventCardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.eventCardName {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-cream);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eventCardDate {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.invitadoBadge {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--border-gold);
+  border-radius: 2px;
+  padding: 0.2rem 0.5rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.eventCardSkeleton {
+  height: 64px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 3px;
+}
+
+.noEventos {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-dim);
+  border-radius: 3px;
+  margin-top: 0.6rem;
+}
+
+.noEventosIcon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+}
+
+.noEventos p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0 0 0.25rem;
+}
+
+.noEventosSub {
+  font-family: var(--font-sub);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-dim) !important;
+  font-weight: 400 !important;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0 }
+  100% { background-position: -200% 0 }
+}
+
+/* ── Form fields (shared) ── */
 .field {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
 }
 
 .fieldLabel {
@@ -129,55 +277,6 @@
   margin-bottom: 0.5rem;
 }
 
-.select {
-  width: 100%;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border-dim);
-  border-radius: 2px;
-  padding: 0.85rem 1rem;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-cream);
-  outline: none;
-  cursor: pointer;
-  transition: border-color 0.2s;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
-}
-
-.select option {
-  background: #1a1510;
-  color: var(--text-cream);
-}
-
-.select:focus {
-  border-color: rgba(201,168,76,0.5);
-}
-
-.selectSkeleton {
-  height: 44px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.04) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-  border-radius: 2px;
-}
-
-@keyframes shimmer {
-  0%   { background-position: 200% 0 }
-  100% { background-position: -200% 0 }
-}
-
-.noEventos {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  padding: 0.75rem 0;
-}
 
 /* ── Tabs ── */
 .tabs {

@@ -144,9 +144,7 @@ export default function EventosLogin() {
           <img src="/images/logo.jpg" alt="Logo" className={styles.logo} />
           <span>ACF Fernando Terremoto</span>
         </Link>
-        <Link to="/" className={styles.backLink}>
-          ← Volver a la web
-        </Link>
+        <Link to="/" className={styles.backLink}>← Volver a la web</Link>
       </header>
 
       {/* Main card */}
@@ -159,118 +157,140 @@ export default function EventosLogin() {
             <h1 className={styles.title}>Accede a tu <em>reserva</em></h1>
           </div>
 
-          {/* Event selector */}
-          <div className={styles.field}>
-            <label className={styles.fieldLabel} htmlFor="evento">Evento</label>
+          {/* ── Event selector ── */}
+          <div className={styles.sectionBlock}>
+            <p className={styles.fieldLabel}>Selecciona el evento</p>
+
             {loadingEventos ? (
-              <div className={styles.selectSkeleton} />
+              <div className={styles.eventList}>
+                {[1,2].map(i => <div key={i} className={styles.eventCardSkeleton} />)}
+              </div>
             ) : eventos.length === 0 ? (
-              <p className={styles.noEventos}>No hay eventos disponibles actualmente.</p>
+              <div className={styles.noEventos}>
+                <span className={styles.noEventosIcon}>🎭</span>
+                <p>No hay eventos disponibles actualmente.</p>
+                <p className={styles.noEventosSub}>Vuelve pronto para consultar la próxima programación.</p>
+              </div>
             ) : (
-              <select
-                id="evento"
-                className={styles.select}
-                value={eventoId}
-                onChange={e => setEventoId(e.target.value)}
-              >
-                {eventos.map(ev => (
-                  <option key={ev.id} value={String(ev.id)}>
-                    {ev.nombre} — {formatFecha(ev.fecha)}{ev.hora ? ` · ${ev.hora}` : ''}
-                  </option>
-                ))}
-              </select>
+              <div className={styles.eventList}>
+                {eventos.map(ev => {
+                  const isSelected = String(ev.id) === eventoId
+                  return (
+                    <button
+                      key={ev.id}
+                      type="button"
+                      className={`${styles.eventCard} ${isSelected ? styles.eventCardSelected : ''}`}
+                      onClick={() => setEventoId(String(ev.id))}
+                    >
+                      <div className={styles.eventRadio}>
+                        <div className={`${styles.radioDot} ${isSelected ? styles.radioDotActive : ''}`} />
+                      </div>
+                      <div className={styles.eventCardBody}>
+                        <span className={styles.eventCardName}>{ev.nombre}</span>
+                        <span className={styles.eventCardDate}>
+                          {formatFecha(ev.fecha)}{ev.hora ? ` · ${ev.hora}h` : ''}
+                        </span>
+                      </div>
+                      {ev.activo_invitado ? (
+                        <span className={styles.invitadoBadge}>Invitados</span>
+                      ) : null}
+                    </button>
+                  )
+                })}
+              </div>
             )}
           </div>
 
-          {/* Tabs */}
-          <div className={styles.tabs}>
-            <button
-              className={`${styles.tab} ${tab === 'socio' ? styles.tabActive : ''}`}
-              onClick={() => setTab('socio')}
-              type="button"
-            >
-              Soy socio
-            </button>
-            <button
-              className={`${styles.tab} ${tab === 'invitado' ? styles.tabActive : ''} ${!invitadoActivo ? styles.tabDisabled : ''}`}
-              onClick={() => invitadoActivo && setTab('invitado')}
-              type="button"
-              title={!invitadoActivo ? 'Este evento no permite acceso a invitados' : ''}
-            >
-              Acceso invitado
-            </button>
-          </div>
+          {/* ── Auth form (only when event selected) ── */}
+          {eventoId && (
+            <>
+              {/* Tabs */}
+              <div className={styles.tabs}>
+                <button
+                  className={`${styles.tab} ${tab === 'socio' ? styles.tabActive : ''}`}
+                  onClick={() => setTab('socio')}
+                  type="button"
+                >
+                  Soy socio
+                </button>
+                <button
+                  className={`${styles.tab} ${tab === 'invitado' ? styles.tabActive : ''} ${!invitadoActivo ? styles.tabDisabled : ''}`}
+                  onClick={() => invitadoActivo && setTab('invitado')}
+                  type="button"
+                  title={!invitadoActivo ? 'Este evento no permite acceso a invitados' : ''}
+                >
+                  Acceso invitado
+                </button>
+              </div>
 
-          {/* Forms */}
-          {tab === 'socio' ? (
-            <form onSubmit={handleSocio} className={styles.form} noValidate>
-              <div className={styles.row}>
-                <div className={styles.field}>
-                  <label className={styles.fieldLabel} htmlFor="socioNum">Número de socio</label>
-                  <input
-                    id="socioNum"
-                    type="number"
-                    className={styles.input}
-                    placeholder="Ej: 42"
-                    value={socioNum}
-                    onChange={e => setSocioNum(e.target.value)}
-                    required
-                    min="1"
-                  />
-                </div>
-                <div className={styles.field}>
-                  <label className={styles.fieldLabel} htmlFor="socioDni">DNI</label>
-                  <input
-                    id="socioDni"
-                    type="text"
-                    className={styles.input}
-                    placeholder="Ej: 12345678A"
-                    value={socioDni}
-                    onChange={e => setSocioDni(e.target.value)}
-                    maxLength={9}
-                    required
-                  />
-                </div>
-              </div>
-              {error && <p className={styles.error}>{error}</p>}
-              <button type="submit" className={styles.submitBtn} disabled={submitting || !eventoId}>
-                {submitting ? 'Verificando…' : 'Acceder'}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleInvitado} className={styles.form} noValidate>
-              <div className={styles.row}>
-                <div className={styles.field}>
-                  <label className={styles.fieldLabel} htmlFor="invDni">DNI / NIE</label>
-                  <input
-                    id="invDni"
-                    type="text"
-                    className={styles.input}
-                    placeholder="Ej: 12345678A"
-                    value={invDni}
-                    onChange={e => setInvDni(e.target.value)}
-                    maxLength={9}
-                    required
-                  />
-                </div>
-                <div className={styles.field}>
-                  <label className={styles.fieldLabel} htmlFor="invNombre">Nombre completo</label>
-                  <input
-                    id="invNombre"
-                    type="text"
-                    className={styles.input}
-                    placeholder="Tu nombre y apellidos"
-                    value={invNombre}
-                    onChange={e => setInvNombre(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              {error && <p className={styles.error}>{error}</p>}
-              <button type="submit" className={styles.submitBtn} disabled={submitting || !eventoId}>
-                {submitting ? 'Verificando…' : 'Acceder como invitado'}
-              </button>
-            </form>
+              {tab === 'socio' ? (
+                <form onSubmit={handleSocio} className={styles.form} noValidate>
+                  <div className={styles.row}>
+                    <div className={styles.field}>
+                      <label className={styles.fieldLabel} htmlFor="socioNum">Número de socio</label>
+                      <input
+                        id="socioNum"
+                        type="number"
+                        className={styles.input}
+                        placeholder="Ej: 1"
+                        value={socioNum}
+                        onChange={e => setSocioNum(e.target.value)}
+                        required min="1"
+                      />
+                    </div>
+                    <div className={styles.field}>
+                      <label className={styles.fieldLabel} htmlFor="socioDni">DNI</label>
+                      <input
+                        id="socioDni"
+                        type="text"
+                        className={styles.input}
+                        placeholder="Ej: 12345678A"
+                        value={socioDni}
+                        onChange={e => setSocioDni(e.target.value)}
+                        maxLength={9} required
+                      />
+                    </div>
+                  </div>
+                  {error && <p className={styles.error}>{error}</p>}
+                  <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                    {submitting ? 'Verificando…' : 'Acceder'}
+                  </button>
+                </form>
+              ) : (
+                <form onSubmit={handleInvitado} className={styles.form} noValidate>
+                  <div className={styles.row}>
+                    <div className={styles.field}>
+                      <label className={styles.fieldLabel} htmlFor="invDni">DNI / NIE</label>
+                      <input
+                        id="invDni"
+                        type="text"
+                        className={styles.input}
+                        placeholder="Ej: 12345678A"
+                        value={invDni}
+                        onChange={e => setInvDni(e.target.value)}
+                        maxLength={9} required
+                      />
+                    </div>
+                    <div className={styles.field}>
+                      <label className={styles.fieldLabel} htmlFor="invNombre">Nombre completo</label>
+                      <input
+                        id="invNombre"
+                        type="text"
+                        className={styles.input}
+                        placeholder="Tu nombre y apellidos"
+                        value={invNombre}
+                        onChange={e => setInvNombre(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+                  {error && <p className={styles.error}>{error}</p>}
+                  <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                    {submitting ? 'Verificando…' : 'Acceder como invitado'}
+                  </button>
+                </form>
+              )}
+            </>
           )}
         </div>
       </main>

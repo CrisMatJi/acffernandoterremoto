@@ -47,8 +47,9 @@
 
 .userInfo {
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-cream);
 }
 
 .logoutBtn {
@@ -81,15 +82,16 @@
 
 .eventoNombre {
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--text-cream);
 }
 
 .eventoFecha {
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
 /* ── Main ── */

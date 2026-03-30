@@ -1,22 +1,23 @@
 ## SQL a ejecutar en Supabase (OBLIGATORIO antes de probar)
 
-Entra en Supabase → SQL Editor y ejecuta este bloque:
+Entra en Supabase → SQL Editor y ejecuta este bloque completo de una vez:
 
 ```sql
--- 1. Anon puede ver eventos activos
+-- ── Políticas RLS ────────────────────────────────────────────────────────────
+DROP POLICY IF EXISTS "anon lee eventos activos" ON eventos;
 CREATE POLICY "anon lee eventos activos"
   ON eventos FOR SELECT TO anon
   USING (activo = 1 OR activo_invitado = 1);
 
--- 2. Anon puede ver todos los asientos
+DROP POLICY IF EXISTS "anon lee asientos" ON asientos;
 CREATE POLICY "anon lee asientos"
   ON asientos FOR SELECT TO anon USING (true);
 
--- 3. Anon puede ver reservas (para mostrar asientos ocupados)
+DROP POLICY IF EXISTS "anon lee reservas" ON reserva;
 CREATE POLICY "anon lee reservas"
   ON reserva FOR SELECT TO anon USING (true);
 
--- 4. Función segura de autenticación de socios
+-- ── Funciones SECURITY DEFINER ───────────────────────────────────────────────
 CREATE OR REPLACE FUNCTION auth_socio(p_id int, p_dni text)
 RETURNS TABLE(id int, nombre text, apellidos text, n_socio int)
 LANGUAGE plpgsql SECURITY DEFINER AS $$
@@ -27,7 +28,6 @@ BEGIN
   WHERE s.id = p_id AND lower(s.dni) = lower(p_dni) AND s.activo = 1;
 END; $$;
 
--- 5. Función para hacer/actualizar reserva
 CREATE OR REPLACE FUNCTION hacer_reserva(
   p_evento_id   int,
   p_socio_id    int,
@@ -51,7 +51,6 @@ BEGIN
   );
 END; $$;
 
--- 6. Función para cancelar reserva
 CREATE OR REPLACE FUNCTION cancelar_reserva(
   p_evento_id   int,
   p_socio_id    int,
@@ -64,7 +63,16 @@ BEGIN
     DELETE FROM reserva WHERE evento_id = p_evento_id AND invitado_id = p_invitado_id;
   END IF;
 END; $$;
+
+-- ── CRÍTICO: permisos de ejecución para la anon key ──────────────────────────
+GRANT EXECUTE ON FUNCTION auth_socio(int, text)               TO anon;
+GRANT EXECUTE ON FUNCTION hacer_reserva(int, int, text, text, text) TO anon;
+GRANT EXECUTE ON FUNCTION cancelar_reserva(int, int, text)    TO anon;
 ```
+
+> **Nota:** Si el login sigue sin funcionar después de ejecutar este SQL, ve a
+> Supabase → Authentication → Policies y verifica que las políticas aparezcan
+> en las tablas `eventos`, `asientos` y `reserva`.
 
 ---
 
