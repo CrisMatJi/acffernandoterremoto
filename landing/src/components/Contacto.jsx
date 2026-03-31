@@ -87,6 +87,20 @@ export default function Contacto() {
               href={MAPS_URL}
               external
             />
+            <ContactCard
+              icon={<InstagramIcon />}
+              label="Instagram"
+              value="@acffterremoto"
+              href="https://www.instagram.com/acffterremoto/"
+              external
+            />
+            <ContactCard
+              icon={<FacebookIcon />}
+              label="Facebook"
+              value="ACF Fernando Terremoto"
+              href="https://www.facebook.com/profile.php?id=61556623589504"
+              external
+            />
           </div>
 
           {/* Right: contact form */}
@@ -224,6 +238,24 @@ function LocationIcon() {
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M11 2a7 7 0 0 1 7 7c0 5-7 12-7 12S4 14 4 9a7 7 0 0 1 7-7z" />
       <circle cx="11" cy="9" r="2.5" />
+    </svg>
+  )
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+function FacebookIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
     </svg>
   )
 }
