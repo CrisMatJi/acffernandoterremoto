@@ -1,13 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabaseAdmin } from '../supabase'
 import styles from './AdminLogin.module.css'
 import { pub } from '../pub'
-
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
-}
 
 export default function AdminLogin() {
   const navigate = useNavigate()
@@ -18,37 +12,22 @@ export default function AdminLogin() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    setLoading(true); setError('')
+    setLoading(true)
+    setError('')
 
-    // Fetch stored credentials from Supabase
-    const [{ data: userRow }, { data: passRow }] = await Promise.all([
-      supabaseAdmin.from('configuracion').select('valor_text').eq('parametro', 'admin_user').maybeSingle(),
-      supabaseAdmin.from('configuracion').select('valor_text').eq('parametro', 'admin_pass').maybeSingle(),
-    ])
+    // Small artificial delay so the button feel doesn't flash
+    await new Promise(r => setTimeout(r, 300))
 
-    const storedUser = userRow?.valor_text ?? import.meta.env.VITE_ADMIN_USER
-    const storedHash = passRow?.valor_text   // null when not yet set via panel
+    const ok =
+      user === import.meta.env.VITE_ADMIN_USER &&
+      pass === import.meta.env.VITE_ADMIN_PASSWORD
 
-    if (user !== storedUser) {
-      setLoading(false)
-      setError('Usuario o contraseña incorrectos')
-      return
-    }
-
-    // If hash stored → compare SHA-256; otherwise plain comparison against env var
-    let passOk = false
-    if (storedHash) {
-      passOk = (await sha256(pass)) === storedHash
-    } else {
-      passOk = pass === import.meta.env.VITE_ADMIN_PASSWORD
-    }
-
-    setLoading(false)
-    if (passOk) {
+    if (ok) {
       sessionStorage.setItem('admin_session', '1')
       navigate('/eventos/admin/resumen', { replace: true })
     } else {
       setError('Usuario o contraseña incorrectos')
+      setLoading(false)
     }
   }
 
