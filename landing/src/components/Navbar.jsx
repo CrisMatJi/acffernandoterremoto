@@ -4,6 +4,7 @@ import styles from './Navbar.module.css'
 import { pub } from '../pub'
 
 const links = [
+  { href: '#noticias',      label: 'Noticias' },
   { href: '#referentes',    label: 'Referentes' },
   { href: '#historia',      label: 'Historia' },
   { href: '#eventos',       label: 'Eventos' },
