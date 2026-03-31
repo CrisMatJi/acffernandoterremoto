@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import Noticias from './components/Noticias'
 import Referentes from './components/Referentes'
 import Historia from './components/Historia'
 import Eventos from './components/Eventos'
@@ -26,6 +27,7 @@ function Landing() {
       <Navbar />
       <main>
         <Hero />
+        <Noticias />
         <Referentes />
         <Historia />
         <Eventos />
