@@ -65,6 +65,13 @@ const miembros = [
     nombre: 'Miguel Ángel Cabral Román',
     cargo: 'Vocal',
   },
+  {
+    id: 'juan-antonio-abucha',
+    nombre: 'Juan Antonio Abucha',
+    cargo: 'Gestor de Redes Sociales',
+    bnFile:    '/images/junta/juan_Antonio_Abucha.jpeg',
+    colorFile: '/images/junta/juan_Antonio_Abucha.jpeg',
+  },
 ]
 
 export default function JuntaDirectiva() {
