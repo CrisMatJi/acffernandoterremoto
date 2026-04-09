@@ -4,11 +4,9 @@
     <meta charset="UTF-8" />
     <script>
       // GitHub Pages SPA: redirect preservando la ruta como ?p= param
-      var base = '/acffernandoterremoto'
-      var path = window.location.pathname.replace(base, '') || '/'
       window.location.replace(
-        window.location.origin + base +
-        '/?p=' + encodeURIComponent(path + window.location.search) +
+        window.location.origin +
+        '/?p=' + encodeURIComponent(window.location.pathname + window.location.search) +
         window.location.hash
       )
     </script>
