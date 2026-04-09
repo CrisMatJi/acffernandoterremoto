@@ -81,15 +81,62 @@
   border-color: var(--border-gold);
 }
 
-/* Wrapper del widget — Behold renderiza dentro del div data-behold-id */
+/* Wrapper del widget */
 .feedWrap {
+  width: 100%;
+  position: relative;
+}
+
+/* Skeleton grid — 3 cols en desktop, 2 en móvil */
+.skeleton {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
   width: 100%;
 }
 
-/*
- * Overrides de estilos de Behold para encajar con la estética oscura.
- * Behold usa shadow DOM parcial; estas reglas afectan al host/wrapper.
- */
+@media (max-width: 600px) {
+  .skeleton { grid-template-columns: repeat(2, 1fr); }
+}
+
+.skeletonCard {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  position: relative;
+}
+
+.skeletonShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,0.00) 40%,
+    rgba(201,168,76,0.07) 50%,
+    rgba(255,255,255,0.00) 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSlide 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmerSlide {
+  0%   { background-position: 200% 0 }
+  100% { background-position: -200% 0 }
+}
+
+/* Widget visible / oculto durante carga */
+.widgetVisible {
+  display: block;
+}
+
+.widgetHidden {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Overrides de estilos de Behold */
 .feedWrap :global(behold-widget) {
   --behold-font-family: var(--font-body);
   --behold-background: transparent;
