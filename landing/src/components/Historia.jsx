@@ -9,7 +9,7 @@ const capitulos = [
     id: 'figura',
     titulo: 'Fernando Terremoto',
     subtitulo: 'El cantaor que nos inspira',
-    texto: `Fernando Fernández Pantoja "Fernando Terremoto" (Jerez de la Frontera, 1934–1981)
+    texto: `Fernando Fernández Monje "Fernando Terremoto" (Jerez de la Frontera, 1934–1981)
     fue uno de los cantaores más sobresalientes del flamenco jerezano del siglo XX. Heredero
     de la más honda tradición gitana de la calle Nueva, su voz encarnaba la esencia del cante
     jondo en estado puro. Su profundidad, su quejío y su verdad flamenca le granjearon el
