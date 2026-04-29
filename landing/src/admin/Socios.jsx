@@ -1,6 +1,14 @@
 import { useState, useEffect, useMemo } from 'react'
+import * as XLSX from 'xlsx'
 import { supabaseAdmin } from '../supabase'
 import s from './admin.module.css'
+
+const IconExcel = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '0.4rem', verticalAlign: 'middle' }}>
+    <rect width="24" height="24" rx="3" fill="#1D6F42"/>
+    <path d="M7 7l3.5 5L7 17h2.5l2.25-3.5L14 17h2.5l-3.5-5 3.5-5H14l-2.25 3.5L9.5 7H7z" fill="white"/>
+  </svg>
+)
 
 const EMPTY = { nombre: '', apellidos: '', dni: '', n_socio: '', activo: 1 }
 
@@ -34,6 +42,20 @@ export default function Socios() {
       s.dni?.toLowerCase().includes(q)
     )
   }, [socios, search])
+
+  function exportExcel() {
+    const filas = socios.map(s => ({
+      'Nº Socio':  s.n_socio ?? '',
+      'Nombre':    s.nombre ?? '',
+      'Apellidos': s.apellidos ?? '',
+      'DNI':       s.dni ?? '',
+      'Estado':    s.activo === 1 ? 'Activo' : 'Inactivo',
+    }))
+    const ws = XLSX.utils.json_to_sheet(filas)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'Socios')
+    XLSX.writeFile(wb, 'socios.xlsx')
+  }
 
   function openCreate() {
     const nextN = socios.length ? Math.max(...socios.map(s => s.n_socio ?? 0)) + 1 : 1
@@ -93,6 +115,11 @@ export default function Socios() {
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
+          {socios.length > 0 && (
+            <button className={s.btnExcel} onClick={exportExcel}>
+              <IconExcel />Exportar a Excel
+            </button>
+          )}
           <button className={s.btnPrimary} onClick={openCreate}>+ Nuevo socio</button>
         </div>
       </div>

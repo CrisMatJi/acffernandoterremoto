@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react'
+import * as XLSX from 'xlsx'
 import { supabaseAdmin } from '../supabase'
 import s from './admin.module.css'
+
+const IconExcel = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '0.4rem', verticalAlign: 'middle' }}>
+    <rect width="24" height="24" rx="3" fill="#1D6F42"/>
+    <path d="M7 7l3.5 5L7 17h2.5l2.25-3.5L14 17h2.5l-3.5-5 3.5-5H14l-2.25 3.5L9.5 7H7z" fill="white"/>
+  </svg>
+)
 
 const EMPTY = { nombre: '', fecha: '', hora: '', activo: 0, activo_invitado: 0 }
 
@@ -29,6 +37,20 @@ export default function Actuaciones() {
   }
 
   useEffect(() => { fetchItems() }, [])
+
+  function exportExcel() {
+    const filas = items.map(it => ({
+      'Nombre':    it.nombre ?? '',
+      'Fecha':     it.fecha ?? '',
+      'Hora':      it.hora ?? '',
+      'Socios':    it.activo === 1 ? 'Activo' : 'Inactivo',
+      'Invitados': it.activo_invitado === 1 ? 'Activo' : 'Inactivo',
+    }))
+    const ws = XLSX.utils.json_to_sheet(filas)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'Actuaciones')
+    XLSX.writeFile(wb, 'actuaciones.xlsx')
+  }
 
   function openCreate() {
     setForm(EMPTY); setError('')
@@ -76,7 +98,14 @@ export default function Actuaciones() {
     <div className={s.section}>
       <div className={s.sectionHeader}>
         <h2 className={s.sectionTitle}>Actuaciones <span>({items.length})</span></h2>
-        <button className={s.btnPrimary} onClick={openCreate}>+ Nueva actuación</button>
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          {items.length > 0 && (
+            <button className={s.btnExcel} onClick={exportExcel}>
+              <IconExcel />Exportar a Excel
+            </button>
+          )}
+          <button className={s.btnPrimary} onClick={openCreate}>+ Nueva actuación</button>
+        </div>
       </div>
 
       <div className={s.tableWrap}>

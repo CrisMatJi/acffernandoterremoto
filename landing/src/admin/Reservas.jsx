@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import * as XLSX from 'xlsx'
 import { supabaseAdmin } from '../supabase'
 import s from './admin.module.css'
 
@@ -10,15 +11,21 @@ function fmtDate(iso) {
   })
 }
 
-export default function Reservas() {
-  const [eventos,       setEventos]       = useState([])
-  const [eventoId,      setEventoId]      = useState('')
-  const [reservas,      setReservas]      = useState([])
-  const [loadingEv,     setLoadingEv]     = useState(true)
-  const [loadingRes,    setLoadingRes]    = useState(false)
-  const [cancelling,    setCancelling]    = useState(null)
+const IconExcel = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginRight: '0.4rem', verticalAlign: 'middle' }}>
+    <rect width="24" height="24" rx="3" fill="#1D6F42"/>
+    <path d="M7 7l3.5 5L7 17h2.5l2.25-3.5L14 17h2.5l-3.5-5 3.5-5H14l-2.25 3.5L9.5 7H7z" fill="white"/>
+  </svg>
+)
 
-  // ── Cargar todos los eventos ───────────────────────────────────────────
+export default function Reservas() {
+  const [eventos,    setEventos]    = useState([])
+  const [eventoId,   setEventoId]   = useState('')
+  const [reservas,   setReservas]   = useState([])
+  const [loadingEv,  setLoadingEv]  = useState(true)
+  const [loadingRes, setLoadingRes] = useState(false)
+  const [cancelling, setCancelling] = useState(null)
+
   useEffect(() => {
     supabaseAdmin
       .from('eventos')
@@ -27,7 +34,6 @@ export default function Reservas() {
       .then(({ data }) => { setEventos(data ?? []); setLoadingEv(false) })
   }, [])
 
-  // ── Cargar reservas del evento seleccionado ────────────────────────────
   async function fetchReservas(id) {
     setLoadingRes(true)
     const { data } = await supabaseAdmin
@@ -46,7 +52,6 @@ export default function Reservas() {
     else setReservas([])
   }
 
-  // ── Cancelar reserva ──────────────────────────────────────────────────
   async function cancelar(reserva) {
     if (!confirm(`¿Cancelar la reserva de ${reserva.nombre_apellidos} (${reserva.asiento_id})?`)) return
     setCancelling(reserva.id)
@@ -55,27 +60,19 @@ export default function Reservas() {
     fetchReservas(eventoId)
   }
 
-  // ── Exportar CSV ──────────────────────────────────────────────────────
-  function exportCSV() {
+  function exportExcel() {
     const eventoNombre = eventos.find(e => String(e.id) === String(eventoId))?.nombre ?? eventoId
-    const header = ['Nombre', 'Tipo', 'Nº/DNI', 'Asiento(s)', 'Fecha reserva']
-    const rows = reservas.map(r => [
-      r.nombre_apellidos ?? '',
-      r.socio_id ? `Socio #${r.socio_id}` : 'Invitado',
-      r.socio_id ?? r.invitado_id ?? '',
-      r.asiento_id ?? '',
-      r.created_at ? new Date(r.created_at).toLocaleString('es-ES') : '—',
-    ])
-    const csv = [header, ...rows]
-      .map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(','))
-      .join('\n')
-    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' })
-    const url  = URL.createObjectURL(blob)
-    const a    = document.createElement('a')
-    a.href = url
-    a.download = `reservas-${eventoNombre.replace(/\s+/g, '-')}.csv`
-    a.click()
-    URL.revokeObjectURL(url)
+    const filas = reservas.map(r => ({
+      'Nombre':          r.nombre_apellidos ?? '',
+      'Tipo':            r.socio_id ? 'Socio' : 'Invitado',
+      'Nº Socio / DNI': r.socio_id ?? r.invitado_id ?? '',
+      'Asiento':         r.asiento_id ?? '',
+      'Fecha reserva':   r.created_at ? new Date(r.created_at).toLocaleString('es-ES') : '',
+    }))
+    const ws = XLSX.utils.json_to_sheet(filas)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'Reservas')
+    XLSX.writeFile(wb, `reservas-${eventoNombre.replace(/\s+/g, '-')}.xlsx`)
   }
 
   const eventoNombre = eventos.find(e => String(e.id) === String(eventoId))?.nombre ?? ''
@@ -88,11 +85,12 @@ export default function Reservas() {
           {reservas.length > 0 && <span>({reservas.length})</span>}
         </h2>
         {reservas.length > 0 && (
-          <button className={s.btnSecondary} onClick={exportCSV}>Exportar CSV</button>
+          <button className={s.btnExcel} onClick={exportExcel}>
+            <IconExcel />Exportar a Excel
+          </button>
         )}
       </div>
 
-      {/* Selector de evento */}
       <div style={{ maxWidth: 420 }}>
         <label className={s.label} style={{ display: 'block', marginBottom: '0.4rem' }}>
           Selecciona una actuación
@@ -113,7 +111,6 @@ export default function Reservas() {
         )}
       </div>
 
-      {/* Tabla de reservas */}
       {eventoId && (
         <div className={s.tableWrap}>
           {loadingRes ? (

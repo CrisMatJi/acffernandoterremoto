@@ -98,6 +98,25 @@
 }
 .btnDanger:hover { background: rgba(224,112,112,0.08); }
 
+.btnExcel {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #1D6F42;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+.btnExcel:hover { background: #155232; }
+
 .btnToggle {
   font-family: var(--font-body);
   font-size: 0.68rem;
