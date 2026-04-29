@@ -85,8 +85,8 @@ export default function EventosLogin() {
     setSubmitting(true)
 
     const { data, error: rpcErr } = await supabase.rpc('auth_socio', {
-      p_id:  parseInt(socioNum, 10),
-      p_dni: socioDni.trim().toUpperCase(),
+      p_n_socio: parseInt(socioNum, 10),
+      p_dni:     socioDni.trim().toUpperCase(),
     })
 
     if (rpcErr || !data?.length) {
